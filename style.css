@@ -1,0 +1,280 @@
+body {
+  min-height: 100%;
+  background-color: #fff;
+  font-family: "Open Sans", sans-serif;
+  color: #333;
+  margin: 0 auto;
+  padding: 2em 2em;
+  box-sizing: border-box;
+  line-height: 1.5em;
+  max-width: 1200px;
+}
+
+h1 {
+  font-size: 2em;
+  text-align: center;
+  line-height: 1.5em;
+  margin-bottom: 0.5em;
+  font-family: Lato;
+}
+
+h2 {
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: 600;
+  margin: 2em 0 1em;
+  color: #2c3e50;
+}
+
+h3 {
+  font-size: 1.2em;
+  color: #34495e;
+  margin: 1.5em 0 1em;
+}
+
+a,
+a:link,
+a:visited {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: #4a90e2;
+}
+
+section {
+  padding: 2em 0;
+  max-width: 50em;
+  margin: 0 auto;
+}
+
+p {
+  margin: 1em auto;
+  line-height: 1.6;
+}
+
+.title-spacer {
+  height: 1.5em;
+}
+
+.figure-spacer {
+  height: 2em;
+}
+
+.name-spacer {
+  width: 1.25em;
+}
+
+#authors-div {
+  gap: 0.4em 1.25em;
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  text-wrap: balance;
+  justify-content: center;
+  max-width: 40em;
+  margin: 0 auto;
+  font-weight: 600;
+  color: #666;
+}
+#affiliations-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2em;
+    max-width: 30em;
+    margin: 0 auto;
+    font-weight: 400;
+    text-wrap: balance;
+    text-align: center;
+}
+.figure-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2em;
+  margin: 2em 0;
+}
+
+.figure-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8f9fa;
+  padding: 1em;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.figure-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.figure-caption {
+  text-align: center;
+  font-size: 0.9em;
+  color: #666;
+  margin-top: 1em;
+  font-style: italic;
+}
+
+button {
+  background-color: #fff;
+  border-radius: 0.5em;
+  border: 1px solid #333;
+  padding: 0.5em 2em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+button i {
+  font-size: 1.2em;
+}
+
+code {
+  font-family: 'Fira Code', Consolas, Monaco, 'Courier New', monospace;
+  white-space: pre;
+  width: 100%;
+  max-width: 100%;
+  overflow: auto;
+  display: block;
+  background-color: #f7f7f7;
+  padding: 1.5em;
+  box-sizing: border-box;
+  border-radius: 0.5em;
+  font-size: 0.9em;
+  line-height: 1.5;
+  border: 1px solid #eee;
+}
+
+.narrow-figure {
+  display: block;
+  margin: 0 auto;
+  width: 30em;
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.reg-figure {
+  display: block;
+  margin: 0 auto;
+  width: 50em;
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.big-figure {
+  display: block;
+  margin: 0 auto;
+  width: 70em;
+  max-width: 100%;
+  border-radius: 4px;
+}
+
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5em;
+  margin: 2em 0;
+}
+
+.result-card {
+  background: #fff;
+  padding: 1.5em;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+  margin: 1em 0;
+}
+
+.result-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.result-card h4 {
+  margin: 0 0 1em;
+  color: #2c3e50;
+  font-size: 1.1em;
+}
+
+.button_list {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+  flex-wrap: wrap;
+  margin: 2em 0;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding: 1em;
+  }
+
+  h1 {
+    font-size: 1.75em;
+  }
+
+  h2 {
+    font-size: 1.3em;
+  }
+
+  p, a, li {
+    font-size: 0.9em;
+  }
+
+  .figure-grid {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    padding: 0.4em 1.5em;
+    font-size: 14px;
+  }
+
+  code {
+    padding: 1em;
+    font-size: 0.8em;
+  }
+
+  .title-spacer {
+    height: 1em;
+  }
+
+  .figure-spacer {
+    height: 1.5em;
+  }
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1em 0;
+}
+
+@media screen and (max-width: 640px) {
+  .katex-display {
+    font-size: 0.875em;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .katex-display {
+    font-size: 0.75em;
+  }
+}

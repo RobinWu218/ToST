@@ -1,0 +1,352 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Token Statistics Transformer: Linear-Time Attention via Variational Rate Reduction</title>
+
+        <meta content="" name="description" />
+        <meta
+            content="Token Statistics Transformer: Linear-Time Attention via Variational Rate Reduction"
+            property="og:title"
+        />
+        <meta
+            content="ToST is a transformer architecture with linear-time attention that is both performant and interpretable, derived from principled compression objectives."
+            property="og:description"
+        />
+        <meta
+            content="assets/card.png"
+            property="og:image"
+        />
+        <meta
+            content="Token Statistics Transformer: Linear-Time Attention via Variational Rate Reduction"
+            property="twitter:title"
+        />
+        <meta
+            content="ToST is a transformer architecture with linear-time attention that is both performant and interpretable, derived from principled compression objectives."
+            property="twitter:description"
+        />
+        <meta
+            content="assets/card.png"
+            property="twitter:image"
+        />
+        <meta property="og:type" content="website" />
+        <meta content="summary_large_image" name="twitter:card" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, minimum-scale=1"
+        />
+
+        <link href="assets/favicon.png" rel="shortcut icon" type="image/x-icon" />
+
+        <link href="https://fonts.googleapis.com" rel="preconnect" />
+        <link
+            href="https://fonts.gstatic.com"
+            rel="preconnect"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js"
+            type="text/javascript"
+        ></script>
+        <script type="text/javascript">
+            WebFont.load({
+                google: {
+                    families: [
+                        "Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic",
+                    ],
+                },
+            });
+        </script>
+
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+            rel="stylesheet"
+            type="text/css"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css"
+        />
+        <link href="style.css" rel="stylesheet" type="text/css" />
+
+        <!-- KaTeX -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+            integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn"
+            crossorigin="anonymous"
+        />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"
+            integrity="sha384-cpW21h6RZv/phavutF+AuVYrr+dA8xD9zs6FwLpaCct6O9ctzYFfFr4dgmgccOTx"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+            integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true },
+                    ],
+                    throwOnError: false,
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            function toggleDisplay(view_id) {
+                const $bibtex = document.querySelector(view_id);
+                $bibtex.style.display = $bibtex.style.display === "none" ? "block" : "none";
+            }
+        </script>
+    </head>
+
+    <body>
+        <h1>
+            Token Statistics Transformer: Linear-Time Attention via Variational Rate Reduction
+        </h1>
+
+        <div class="title-spacer"></div>
+
+        <!-- Authors -->
+        <div id="authors-div">
+            <div>
+                <a href="#" target="_blank">Ziyang Wu</a><sup>1</sup>
+                <div class="name-spacer" style="display: inline-block"></div>
+                <a href="#" target="_blank">Tianjiao Ding</a><sup>2&dagger;</sup>
+                <div class="name-spacer" style="display: inline-block"></div>
+                <a href="#" target="_blank">Yifu Lu</a><sup>3&dagger;</sup>
+            </div>
+
+            <div>
+                <a href="#" target="_blank">Druv Pai</a><sup>1</sup>
+                <div class="name-spacer" style="display: inline-block"></div>
+                <a href="#" target="_blank">Jingyuan Zhang</a><sup>4</sup>
+                <div class="name-spacer" style="display: inline-block"></div>
+                <a href="#" target="_blank">Weida Wang</a><sup>5</sup>
+            </div>
+
+            <div>
+                <a href="#" target="_blank">Yaodong Yu</a><sup>1</sup>
+                <div class="name-spacer" style="display: inline-block"></div>
+                <a href="#" target="_blank">Yi Ma</a><sup>1,6</sup>
+                <div class="name-spacer" style="display: inline-block"></div>
+                <a href="#" target="_blank">Benjamin D. Haeffele</a><sup>7</sup>
+            </div>
+        </div>
+        <div class="title-spacer"></div>
+
+        <!-- Affiliations -->
+        <div class="affiliations-container">
+            <div id="affiliations-list">
+                <span><sup>1</sup>UC Berkeley</span>
+                <span><sup>2</sup>UPenn</span>
+                <span><sup>3</sup>UMich</span>
+                <span><sup>4</sup>THU & Transcengram</span>
+                <span><sup>5</sup>Tsinghua SIGS</span>
+                <span><sup>6</sup>HKU</span>
+                <span><sup>7</sup>JHU</span>
+            </div>
+        </div>
+        <div class="title-spacer"></div>
+
+        <!-- Links -->
+        <div class="button_list">
+            <a href="https://github.com/RobinWu218/ToST" target="_blank">
+                <button>
+                    <i class="ti ti-brand-github"></i>
+                    GitHub
+                </button>
+            </a>
+            <a href="https://arxiv.org/abs/2412.17810" target="_blank">
+                <button>
+                    <i class="ti ti-article"></i>
+                    arXiv
+                </button>
+            </a>
+            <a onclick="toggleDisplay('#bibtex_paper')">
+                <button>
+                    <i class="ti ti-book-2"></i>
+                    BibTeX
+                </button>
+            </a>
+        </div>
+
+        <section id="bibtex_paper" style="display: none">
+            <div class="figure-spacer"></div>
+            <code>@article{wu2024token,
+    title={Token Statistics Transformer: Linear-Time Attention via Variational Rate Reduction},
+    author={Wu, Ziyang and Ding, Tianjiao and Lu, Yifu and Pai, Druv and Zhang, Jingyuan and Wang, Weida and Yu, Yaodong and Ma, Yi and Haeffele, Benjamin D.},
+    journal={arXiv preprint arXiv:2412.17810},
+    year={2024}
+}</code>
+        </section>
+
+        <!-- Summary -->
+        <section>
+            <p>
+                TL;DR: <em><b>ToST</b> (Token Statistics Transformer) is a novel transformer architecture that achieves linear-time complexity and competitive performance through unrolled optimization of the variational rate reduction objective, leading to significantly improved computational efficiency and interpretability.</em>
+
+            <div class="figure-container">
+                <img src="assets/tost_architecture.png" alt="ToST Architecture" class="reg-figure">
+                <p class="figure-caption">One layer of Token Statistics Transformer (ToST). The Token Statistics Self-Attention (TSSA) operator transforms tokens efficiently via multiplying each row of the projected token by a scalar, leading to linear complexity in both space and time.</p>
+            </div>
+
+            <div class="figure-container highlight-box">
+                <div class="highlight-content">
+                    <h3>Key Contributions</h3>
+                    <ul>
+                        <li>A new variational form of the MCR² objective leading to Token Statistics Self-Attention (TSSA)</li>
+                        <li>A novel transformer-like architecture constructed through first principles with theoretical grounding</li>
+                        <li>The resulting architecture enjoys linear complexity of time and memory</li>
+                        <li>Competitive performance across diverse tasks with improved interpretability </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Method</h2>
+            <div class="figure-container">
+                <img src="assets/idea.png" alt="Main Idea" class="reg-figure">
+                <p class="figure-caption"> Following CRATE, ToST aims to map input tokens(e.g. image patches) to a structured feature space of lower dimension. Tokens with similar semantics may belong to the same geometric structures in the original space and be grouped together. A learned mapping $\phi$ converts these tokens into features which are compressed, linearized, and discriminative.</p>
+            </div>
+            <p>
+                We derive our network architecture by extending prior work <a href="https://ma-lab-berkeley.github.io/CRATE/">CRATE</a>, which has shown that a transformer style architecture naturally arises by "white-box" architecture design, where each layer of the network is designed to implement an incremental optimization step of a maximal coding rate reduction objective (MCR²).
+            </p>
+
+
+            <p>
+                Specifically, we derive a novel variational form of the MCR² objective and show that the architecture that results from unrolled gradient descent of this variational objective leads to a new attention module called Token Statistics Self-Attention (TSSA). TSSA has linear computational and memory complexity and radically departs from the typical attention architecture that computes pairwise similarities between tokens.
+            </p>
+
+            <div class="figure-container highlight-box">
+                <div class="highlight-content">
+                <h3>Key Formulations</h3>
+                <p>The MCR² objective is defined as:</p>
+                <div style="text-align: center; margin: 1em 0;">
+                    $$\Delta R(\mathbf{Z},\mathbf{\Pi})\doteq\underbrace{\frac{1}{2}\log\det\left(\mathbf{I}+\frac{d}{\epsilon^{2}}\frac{1}{n}\mathbf{Z}\mathbf{Z}^{\top}\right)}_{\doteq R(\mathbf{Z})}-\underbrace{\frac{1}{2}\sum_{k=1}^{K}\frac{n_{k}}{n}\log\det\left(\mathbf{I}+\frac{d}{\epsilon^{2}}\frac{1}{n_{k}}\mathbf{Z}\mathrm{Diag}(\bm{\pi}_{k})\mathbf{Z}^{\top}\right)}_{\doteq R_{c}(\mathbf{Z},\mathbf{\Pi})}$$
+                </div>
+
+                <p>We propose a novel variational form of the compression objective:</p>
+                <div style="text-align: center; margin: 1em 0;">
+                    $$R^{var}_{c,f} (\mathbf{Z},\mathbf{\Pi} \mid \{\mathbf{U}_{k}\}_{k = 1}^{K}) \doteq \frac{1}{2}\sum_{k=1}^K \frac{n_k}{n} \sum_{i=1}^{d} f\left(\frac{1}{n_k} (\mathbf{U}_{k}^{\top} \mathbf{Z} \mathrm{Diag}(\bm{\pi}_{k}) \mathbf{Z}^{\top} \mathbf{U}_{k})_{ii} \right)$$
+                </div>
+
+                <p>The Token Statistics Self-Attention (TSSA) operator is defined as:</p>
+                <div style="text-align: center; margin: 1em 0;">
+                    $$\operatorname{\texttt{TSSA}}(\mathbf{Z}\mid\{\mathbf{U}_{k}\}_{k=1}^{K})\doteq-\frac{\tau}{n}\sum_{k=1}^{K}\mathbf{U}_{k}\mathbf{D}(\mathbf{Z},\bm{\pi}_{k}\mid\mathbf{U}_{k})\mathbf{U}_{k}^{\top}\mathbf{Z}\mathrm{Diag}(\bm{\pi}_{k})$$
+                </div>
+            </div>
+            </div>
+            
+        <div class="button_list">
+            <a onclick="toggleDisplay('#code')">
+                <button>
+                    <i class="ti"></i>
+                    TSSA Implementation
+                </button>
+            </a>
+            </div>
+            <div id="code" style="display: none">
+    <code>class TSSA(nn.Module):
+        def __init__(self, dim, num_heads = 8, qkv_bias=False):
+            self.heads = num_heads
+            self.attend = nn.Softmax(dim = 1)
+            self.qkv = nn.Linear(dim, dim, bias=qkv_bias)
+            self.temp = nn.Parameter(torch.ones(num_heads, 1))
+            self.to_out = nn.Sequential(
+                nn.Linear(dim, dim)
+            )
+    
+        def forward(self, x):
+            w = rearrange(
+                self.qkv(x), 'b n (h d) -> b h n d', h = self.heads
+            )
+            b, h, N, d = w.shape
+            w_normed = torch.nn.functional.normalize(w, dim=-2)
+            
+            Pi = self.attend(torch.sum(w_normed ** 2, dim=-1) * self.temp)
+            dots = torch.matmul(
+                (Pi / (Pi.sum(dim=-1, keepdim=True) + 1e-8)).unsqueeze(-2),
+                w ** 2
+            )
+            attn = 1. / (1 + dots)
+            out = - torch.mul(w.mul(Pi.unsqueeze(-1)), attn)
+            out = rearrange(out, 'b h n d -> b n (h d)')
+            return self.to_out(out)
+                </code>
+            </div>
+        </section>
+
+        <section>
+            <h2>Empirical Results</h2>
+            <div class="result-card">
+                <h4>Linear Complexity of Compute and Memory</h4>
+                <p> ToST achieves linear scaling with sequence length in both computation time and memory usage, making it significantly more efficient than standard transformers.</p>
+                <div class="figure-container">
+                    <img src="assets/speed_O.png" alt="ToST speed" class="reg-figure">
+                    <p class="figure-caption">Complexity Analysis comparison.</p>
+                    <img src="assets/speed.png" alt="ToST speed" class="reg-figure">
+                    <p class="figure-caption">Speed & Mem usage comparison evaluated on GPUs.</p>
+                </div>
+            </div>
+            <div class="result-card">
+                <h4>Competitive Performance on Vision</h4>
+                <p> ToST demonstrates comparable performance with conventional transformers while being significantly more computationally efficient.</p>
+                <div class="figure-container">
+                    <img src="assets/imagenet_results.png" alt="ToST Results" class="reg-figure">
+                </div>
+            </div>
+            <div class="result-card">
+                <h4>Experiments on Long Sequence Tasks and Language Modeling</h4>
+                <p>ToST can be extended and works on various task scenerios including causal language modeling.</p>
+                <div class="figure-container">
+                    <img src="assets/NLP_tasks.png" alt="ToST Architecture" class="reg-figure">
+                    <p class="figure-caption">Performance on NLP tasks.</p>
+                </div>
+            </div>
+            <div class="result-card">
+                <h4>Principled Design</h4>
+                <p>Since ToST is derived from a learning objective through unrolling, we can analyze the behavior of a learned model layer-by-layer in a principled manner.</p>
+                <div class="figure-container">
+                    <img src="assets/coding_rate.png" alt="Coding Rate across layers" class="reg-figure">
+                    <p class="figure-caption">The variational compression term of the TSSA outputs at different layers of the ToST model</p>
+                </div>
+            </div>
+            <div class="result-card">
+                <h4>Interpretability in Learned Representations</h4>
+                <p> ToST naturally produces interpretable attention patterns without complex self-supervised training</p>
+                <!--div class="figure-grid"-->
+                <div class="figure-container">
+                    <img src="assets/head_vis.png" alt="ToST head vis" class="reg-figure">
+                    <p class="figure-caption">Comparison of [CLS] token attention map from the last head in the penultimate global class attention layer.</p>
+                    <img src="assets/tost_small_Pi_vis_8.png" alt="ToST Pi vis" class="reg-figure" style="max-width: 75%">
+                    <p class="figure-caption">Visualize each row (after reshaping) of the estimated membership matrix $\Pi$ in the TSSA layer.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <p>
+                    In summary, we develop a novel, efficient attention mechanism derived from a theoretically principled objective of data compression and representation learning. Our proposed TSSA operator is unique among attention operators in that it does not require computing pairwise interactions between tokens and instead is constructed from a second moment statistic of projected token features. This results in our operator being significantly more efficient than standard attention operators, while still achieving similar performance to comparable transformers. We believe that this work provides an initial demonstration of the tremendous potential in designing novel and efficient deep architectures from mathematical principles. 
+                </p>
+            </div>
+        </section>
+
+        <section>
+            <h2>Acknowledgements</h2>
+            <p>
+                This website template was adapted from CRATE's  <a href="https://ma-lab-berkeley.github.io/CRATE/">project page</a>.
+            </p>
+        </section>
+    </body>
+</html>
