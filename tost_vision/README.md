@@ -36,6 +36,16 @@ Alternatively use submitit for multinode training:
 python run_with_submitit.py --partition [PARTITION_NAME] --nodes 2 --ngpus 8 --model tost_cab_small_12_p16 --batch-size 64 --drop-path 0.05 --job_dir /experiments/tost_cab_small_12_p16/ --epochs 400
 ```
 
+To train ToST-T12/16 model, run:
+```sh
+python -m torch.distributed.launch --nproc_per_node=8 --use_env main.py --model tost_cab_tiny_12_p16 --batch-size 128 --drop-path 0.0 --output_dir /experiments/tost_cab_tiny_12_p16/ --epochs 400
+```
+
+To train ToST-M12/16 model, run:
+```sh
+python -m torch.distributed.launch --nproc_per_node=8 --use_env main.py --model tost_cab_medium_12_p16 --batch-size 128 --drop-path 0.15 --output_dir /experiments/tost_cab_medium_12_p16/ --epochs 400
+```
+
 ### Evaluation
 To evaluate a pretrained ToST model, use the following command: 
 ```sh
